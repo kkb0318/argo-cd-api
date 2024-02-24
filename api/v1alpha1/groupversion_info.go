@@ -20,11 +20,11 @@ limitations under the License.
 package v1alpha1
 
 import (
-	"k8s.io/apimachinery/pkg/runtime/schema"
-	"k8s.io/apimachinery/pkg/runtime"
-	"sigs.k8s.io/controller-runtime/pkg/scheme"
+	application "github.com/kkb0318/argo-cd-api/api"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-  application	"github.com/kkb0318/argo-cd-api/api"
+	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/runtime/schema"
+	"sigs.k8s.io/controller-runtime/pkg/scheme"
 )
 
 var (
@@ -50,7 +50,6 @@ var (
 func Resource(resource string) schema.GroupResource {
 	return SchemeGroupVersion.WithResource(resource).GroupResource()
 }
-
 
 // addKnownTypes adds the set of types defined in this package to the supplied scheme.
 func addKnownTypes(scheme *runtime.Scheme) error {

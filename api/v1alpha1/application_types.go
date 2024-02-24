@@ -10,7 +10,6 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-
 // ApplicationSpec represents desired application state. Contains link to repository with application definition and additional parameters link definition revision.
 type ApplicationSpec struct {
 	// Source is a reference to the location of the application's manifests or chart
@@ -112,8 +111,8 @@ const (
 
 type RefTarget struct {
 	// Repo           Repository `protobuf:"bytes,1,opt,name=repo"`
-	TargetRevision string     `protobuf:"bytes,2,opt,name=targetRevision"`
-	Chart          string     `protobuf:"bytes,3,opt,name=chart"`
+	TargetRevision string `protobuf:"bytes,2,opt,name=targetRevision"`
+	Chart          string `protobuf:"bytes,3,opt,name=chart"`
 }
 
 type RefTargetRevisionMapping map[string]*RefTarget
@@ -340,61 +339,62 @@ type OperationInitiator struct {
 	// Automated is set to true if operation was initiated automatically by the application controller.
 	Automated bool `json:"automated,omitempty" protobuf:"bytes,2,opt,name=automated"`
 }
-//
+
 // // Operation contains information about a requested or running operation
-// type Operation struct {
-// 	// Sync contains parameters for the operation
-// 	Sync *SyncOperation `json:"sync,omitempty" protobuf:"bytes,1,opt,name=sync"`
-// 	// InitiatedBy contains information about who initiated the operations
-// 	InitiatedBy OperationInitiator `json:"initiatedBy,omitempty" protobuf:"bytes,2,opt,name=initiatedBy"`
-// 	// Info is a list of informational items for this operation
-// 	Info []*Info `json:"info,omitempty" protobuf:"bytes,3,name=info"`
-// 	// Retry controls the strategy to apply if a sync fails
-// 	Retry RetryStrategy `json:"retry,omitempty" protobuf:"bytes,4,opt,name=retry"`
-// }
+//
+//	type Operation struct {
+//		// Sync contains parameters for the operation
+//		Sync *SyncOperation `json:"sync,omitempty" protobuf:"bytes,1,opt,name=sync"`
+//		// InitiatedBy contains information about who initiated the operations
+//		InitiatedBy OperationInitiator `json:"initiatedBy,omitempty" protobuf:"bytes,2,opt,name=initiatedBy"`
+//		// Info is a list of informational items for this operation
+//		Info []*Info `json:"info,omitempty" protobuf:"bytes,3,name=info"`
+//		// Retry controls the strategy to apply if a sync fails
+//		Retry RetryStrategy `json:"retry,omitempty" protobuf:"bytes,4,opt,name=retry"`
+//	}
 //
 // // SyncOperationResource contains resources to sync.
-// type SyncOperationResource struct {
-// 	Group     string `json:"group,omitempty" protobuf:"bytes,1,opt,name=group"`
-// 	Kind      string `json:"kind" protobuf:"bytes,2,opt,name=kind"`
-// 	Name      string `json:"name" protobuf:"bytes,3,opt,name=name"`
-// 	Namespace string `json:"namespace,omitempty" protobuf:"bytes,4,opt,name=namespace"`
-// 	// nolint:govet
-// 	Exclude bool `json:"-"`
-// }
+//
+//	type SyncOperationResource struct {
+//		Group     string `json:"group,omitempty" protobuf:"bytes,1,opt,name=group"`
+//		Kind      string `json:"kind" protobuf:"bytes,2,opt,name=kind"`
+//		Name      string `json:"name" protobuf:"bytes,3,opt,name=name"`
+//		Namespace string `json:"namespace,omitempty" protobuf:"bytes,4,opt,name=namespace"`
+//		// nolint:govet
+//		Exclude bool `json:"-"`
+//	}
 //
 // // RevisionHistories is a array of history, oldest first and newest last
 // type RevisionHistories []RevisionHistory
 //
 // // SyncOperation contains details about a sync operation.
-// type SyncOperation struct {
-// 	// Revision is the revision (Git) or chart version (Helm) which to sync the application to
-// 	// If omitted, will use the revision specified in app spec.
-// 	Revision string `json:"revision,omitempty" protobuf:"bytes,1,opt,name=revision"`
-// 	// Prune specifies to delete resources from the cluster that are no longer tracked in git
-// 	Prune bool `json:"prune,omitempty" protobuf:"bytes,2,opt,name=prune"`
-// 	// DryRun specifies to perform a `kubectl apply --dry-run` without actually performing the sync
-// 	DryRun bool `json:"dryRun,omitempty" protobuf:"bytes,3,opt,name=dryRun"`
-// 	// SyncStrategy describes how to perform the sync
-// 	SyncStrategy *SyncStrategy `json:"syncStrategy,omitempty" protobuf:"bytes,4,opt,name=syncStrategy"`
-// 	// Resources describes which resources shall be part of the sync
-// 	Resources []SyncOperationResource `json:"resources,omitempty" protobuf:"bytes,6,opt,name=resources"`
-// 	// Source overrides the source definition set in the application.
-// 	// This is typically set in a Rollback operation and is nil during a Sync operation
-// 	Source *ApplicationSource `json:"source,omitempty" protobuf:"bytes,7,opt,name=source"`
-// 	// Manifests is an optional field that overrides sync source with a local directory for development
-// 	Manifests []string `json:"manifests,omitempty" protobuf:"bytes,8,opt,name=manifests"`
-// 	// SyncOptions provide per-sync sync-options, e.g. Validate=false
-// 	SyncOptions SyncOptions `json:"syncOptions,omitempty" protobuf:"bytes,9,opt,name=syncOptions"`
-// 	// Sources overrides the source definition set in the application.
-// 	// This is typically set in a Rollback operation and is nil during a Sync operation
-// 	Sources ApplicationSources `json:"sources,omitempty" protobuf:"bytes,10,opt,name=sources"`
-// 	// Revisions is the list of revision (Git) or chart version (Helm) which to sync each source in sources field for the application to
-// 	// If omitted, will use the revision specified in app spec.
-// 	Revisions []string `json:"revisions,omitempty" protobuf:"bytes,11,opt,name=revisions"`
-// }
 //
-//
+//	type SyncOperation struct {
+//		// Revision is the revision (Git) or chart version (Helm) which to sync the application to
+//		// If omitted, will use the revision specified in app spec.
+//		Revision string `json:"revision,omitempty" protobuf:"bytes,1,opt,name=revision"`
+//		// Prune specifies to delete resources from the cluster that are no longer tracked in git
+//		Prune bool `json:"prune,omitempty" protobuf:"bytes,2,opt,name=prune"`
+//		// DryRun specifies to perform a `kubectl apply --dry-run` without actually performing the sync
+//		DryRun bool `json:"dryRun,omitempty" protobuf:"bytes,3,opt,name=dryRun"`
+//		// SyncStrategy describes how to perform the sync
+//		SyncStrategy *SyncStrategy `json:"syncStrategy,omitempty" protobuf:"bytes,4,opt,name=syncStrategy"`
+//		// Resources describes which resources shall be part of the sync
+//		Resources []SyncOperationResource `json:"resources,omitempty" protobuf:"bytes,6,opt,name=resources"`
+//		// Source overrides the source definition set in the application.
+//		// This is typically set in a Rollback operation and is nil during a Sync operation
+//		Source *ApplicationSource `json:"source,omitempty" protobuf:"bytes,7,opt,name=source"`
+//		// Manifests is an optional field that overrides sync source with a local directory for development
+//		Manifests []string `json:"manifests,omitempty" protobuf:"bytes,8,opt,name=manifests"`
+//		// SyncOptions provide per-sync sync-options, e.g. Validate=false
+//		SyncOptions SyncOptions `json:"syncOptions,omitempty" protobuf:"bytes,9,opt,name=syncOptions"`
+//		// Sources overrides the source definition set in the application.
+//		// This is typically set in a Rollback operation and is nil during a Sync operation
+//		Sources ApplicationSources `json:"sources,omitempty" protobuf:"bytes,10,opt,name=sources"`
+//		// Revisions is the list of revision (Git) or chart version (Helm) which to sync each source in sources field for the application to
+//		// If omitted, will use the revision specified in app spec.
+//		Revisions []string `json:"revisions,omitempty" protobuf:"bytes,11,opt,name=revisions"`
+//	}
 type Info struct {
 	Name  string `json:"name" protobuf:"bytes,1,name=name"`
 	Value string `json:"value" protobuf:"bytes,2,name=value"`
@@ -419,7 +419,7 @@ type SyncPolicy struct {
 	ManagedNamespaceMetadata *ManagedNamespaceMetadata `json:"managedNamespaceMetadata,omitempty" protobuf:"bytes,4,opt,name=managedNamespaceMetadata"`
 	// If you add a field here, be sure to update IsZero.
 }
-//
+
 // RetryStrategy contains information about the strategy to apply when a sync failed
 type RetryStrategy struct {
 	// Limit is the maximum number of attempts for retrying a failed sync. If set to 0, no retries will be performed.
@@ -1026,24 +1026,23 @@ type KustomizeOptions struct {
 	BinaryPath string `protobuf:"bytes,2,opt,name=binaryPath"`
 }
 
-//+kubebuilder:object:root=true
+// +kubebuilder:object:root=true
 // Application is a definition of Application resource.
 type Application struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata" protobuf:"bytes,1,opt,name=metadata"`
-	Spec              ApplicationSpec   `json:"spec" protobuf:"bytes,2,opt,name=spec"`
+	Spec              ApplicationSpec `json:"spec" protobuf:"bytes,2,opt,name=spec"`
 	// Status            ApplicationStatus `json:"status,omitempty" protobuf:"bytes,3,opt,name=status"`
 	// Operation         *Operation        `json:"operation,omitempty" protobuf:"bytes,4,opt,name=operation"`
 }
 
-//+kubebuilder:object:root=true
+// +kubebuilder:object:root=true
 // ApplicationList is list of Application resources
 type ApplicationList struct {
 	metav1.TypeMeta `json:",inline"`
 	metav1.ListMeta `json:"metadata" protobuf:"bytes,1,opt,name=metadata"`
 	Items           []Application `json:"items" protobuf:"bytes,2,rep,name=items"`
 }
-
 
 func init() {
 	SchemeBuilder.Register(&Application{}, &ApplicationList{})
