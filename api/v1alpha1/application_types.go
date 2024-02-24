@@ -10,14 +10,6 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
-// Application is a definition of Application resource.
-type Application struct {
-	metav1.TypeMeta   `json:",inline"`
-	metav1.ObjectMeta `json:"metadata" protobuf:"bytes,1,opt,name=metadata"`
-	Spec              ApplicationSpec   `json:"spec" protobuf:"bytes,2,opt,name=spec"`
-	// Status            ApplicationStatus `json:"status,omitempty" protobuf:"bytes,3,opt,name=status"`
-	// Operation         *Operation        `json:"operation,omitempty" protobuf:"bytes,4,opt,name=operation"`
-}
 
 // ApplicationSpec represents desired application state. Contains link to repository with application definition and additional parameters link definition revision.
 type ApplicationSpec struct {
@@ -1034,7 +1026,17 @@ type KustomizeOptions struct {
 	BinaryPath string `protobuf:"bytes,2,opt,name=binaryPath"`
 }
 
+//+kubebuilder:object:root=true
+// Application is a definition of Application resource.
+type Application struct {
+	metav1.TypeMeta   `json:",inline"`
+	metav1.ObjectMeta `json:"metadata" protobuf:"bytes,1,opt,name=metadata"`
+	Spec              ApplicationSpec   `json:"spec" protobuf:"bytes,2,opt,name=spec"`
+	// Status            ApplicationStatus `json:"status,omitempty" protobuf:"bytes,3,opt,name=status"`
+	// Operation         *Operation        `json:"operation,omitempty" protobuf:"bytes,4,opt,name=operation"`
+}
 
+//+kubebuilder:object:root=true
 // ApplicationList is list of Application resources
 type ApplicationList struct {
 	metav1.TypeMeta `json:",inline"`
@@ -1042,7 +1044,6 @@ type ApplicationList struct {
 	Items           []Application `json:"items" protobuf:"bytes,2,rep,name=items"`
 }
 
-//+kubebuilder:object:root=true
 
 func init() {
 	SchemeBuilder.Register(&Application{}, &ApplicationList{})
