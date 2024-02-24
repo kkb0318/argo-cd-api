@@ -21,7 +21,10 @@ package v1alpha1
 
 import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
+	"k8s.io/apimachinery/pkg/runtime"
 	"sigs.k8s.io/controller-runtime/pkg/scheme"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+  application	"github.com/kkb0318/argo-cd-api/api"
 )
 
 var (
@@ -34,3 +37,31 @@ var (
 	// AddToScheme adds the types in this group-version to the given scheme.
 	AddToScheme = SchemeBuilder.AddToScheme
 )
+
+var (
+	// SchemeGroupVersion is group version used to register these objects
+	SchemeGroupVersion                   = schema.GroupVersion{Group: application.Group, Version: "v1alpha1"}
+	ApplicationSchemaGroupVersionKind    = schema.GroupVersionKind{Group: application.Group, Version: "v1alpha1", Kind: application.ApplicationKind}
+	AppProjectSchemaGroupVersionKind     = schema.GroupVersionKind{Group: application.Group, Version: "v1alpha1", Kind: application.AppProjectKind}
+	ApplicationSetSchemaGroupVersionKind = schema.GroupVersionKind{Group: application.Group, Version: "v1alpha1", Kind: application.ApplicationSetKind}
+)
+
+// Resource takes an unqualified resource and returns a Group-qualified GroupResource.
+func Resource(resource string) schema.GroupResource {
+	return SchemeGroupVersion.WithResource(resource).GroupResource()
+}
+
+
+// addKnownTypes adds the set of types defined in this package to the supplied scheme.
+func addKnownTypes(scheme *runtime.Scheme) error {
+	scheme.AddKnownTypes(SchemeGroupVersion,
+		&Application{},
+		&ApplicationList{},
+		// &AppProject{},
+		// &AppProjectList{},
+		// &ApplicationSet{},
+		// &ApplicationSetList{},
+	)
+	metav1.AddToGroupVersion(scheme, SchemeGroupVersion)
+	return nil
+}
